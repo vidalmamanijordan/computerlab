@@ -21,6 +21,9 @@ class ListArticles extends Component
     public $open_edit = false;
     public $open_image = false;
     public $cant = '10';
+    public $readyToLoad = false;
+
+    protected $listeners = ['render' => 'render', 'delete' => 'delete'];
 
     protected $queryString = [
         'cant' => ['except' => '10'],
@@ -40,8 +43,6 @@ class ListArticles extends Component
         $this->resetPage();
     }
 
-    protected $listeners = ['render' => 'render'];
-
     protected $rules = [
         'article.name' => 'required',
         'article.description' => 'required',
@@ -50,14 +51,23 @@ class ListArticles extends Component
     
     public function render()
     {
-        $laboratories = Laboratory::all();
-        
-        $articles = Article::where('name', 'like', '%' . $this->search . '%')
-                                ->orWhere('description', 'like', '%' . $this->search . '%')
-                                ->orderBy($this->sort, $this->direction)
-                                ->paginate($this->cant);
+        if ($this->readyToLoad){
+            $laboratories = Laboratory::all();
+            $articles = Article::where('name', 'like', '%' . $this->search . '%')
+                                    ->orWhere('description', 'like', '%' . $this->search . '%')
+                                    ->orderBy($this->sort, $this->direction)
+                                    ->paginate($this->cant);
+        }else{
+            $articles = [];
+            $laboratories = [];
+        }
 
         return view('livewire.list-articles', compact('articles', 'laboratories'));
+    }
+
+    public function loadArticles()
+    {
+        $this->readyToLoad = true;
     }
 
     public function order($sort)
@@ -101,5 +111,9 @@ class ListArticles extends Component
         $this->article = $article;
         $this->open_image = true;
     }
+
+    public function delete(Article $article)
+    {
+        $article->delete();
+    }
 }
-/* video 15 */
