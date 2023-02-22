@@ -4,12 +4,6 @@
             'name' => 'Dashboard',
             'route' => route('dashboard'),
             'active' => request()->routeIs('dashboard')
-        ],
-
-        [
-            'name' => 'Administrar',
-            'route' => route('dashboard'),
-            'active' => request()->routeIs('#')
         ]
     ];
 @endphp

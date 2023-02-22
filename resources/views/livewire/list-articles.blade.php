@@ -1,4 +1,4 @@
-<div wire:init="loadArticles">
+<div {{-- wire:init="loadArticles" --}}>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             <b class="font-extrabold">Objetos</b> <b class="font-thin">encontrados</b>
@@ -149,6 +149,11 @@
                                                     d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                                             </svg>
                                         </a>
+                                        <a wire:click="state({{ $item }})" href="#">
+                                            <div class="text-cyan-600 mt-1">
+                                                <i class="fa-solid fa-right-left"></i>
+                                            </div>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -257,6 +262,63 @@
         </div>
     </x-jet-modal>
     {{-- Modal ver imagen / --}}
+
+    {{-- Modal cambiar estado --}}
+    <x-jet-dialog-modal wire:model="open_state">
+        <x-slot name="title">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Estado</h3>
+            <button wire:click="$set('open_state', false)" type="button"
+                class="absolute top-3 right-6 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                data-modal-hide="authentication-modal">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <hr class="mt-4">
+        </x-slot>
+        <x-slot name="content">
+            <x-jet-label value="Cambiar estado" />
+            <div class="flex items-center mb-4 mt-2">
+                <input wire:model="article.status" id="default-radio-1" type="radio" value="1" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"">
+                <label for="default-radio-1" class="mr-5 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Entregar
+                </label>
+                <i class="fa-solid fa-arrow-right mr-2"></i>
+                <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-red-600 dark:text-white">
+                        Por entregar
+                    </h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">Marque esta <b>opción</b> cuando aún el objeto no ha sido entregado a su propietario.</p>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <input wire:model="article.status" id="default-radio-2" type="radio" value="2" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="default-radio-2" class="mr-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Entregado
+                </label>
+                <i class="fa-solid fa-arrow-right mr-2"></i>
+                <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-green-600 dark:text-white">
+                        Entregado
+                    </h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">Marque esta <b>opción</b> cuando el objeto ha sido entregado a su propietario.</p>
+                </div>
+            </div>
+        </x-slot>
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$set('open_state', false)" class="mr-2">
+                Cancelar
+            </x-jet-secondary-button>
+            <x-jet-button wire:click="update" wire:loading.attr="disabled" class="disabled:opacity-25">
+                Cambiar estado
+            </x-jet-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+    {{-- Modal cambiar estado / --}}
     @push('js')
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
@@ -268,7 +330,7 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, eliminar!'
+                    confirmButtonText: 'Eliminar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Livewire.emitTo('list-articles', 'delete', articleId)

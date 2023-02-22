@@ -20,8 +20,10 @@ class ListArticles extends Component
     public $direction = 'desc';
     public $open_edit = false;
     public $open_image = false;
+    public $open_state = false;
     public $cant = '10';
-    public $readyToLoad = false;
+    public $sendNewsletter;
+    /* public $readyToLoad = false; */
 
     protected $listeners = ['render' => 'render', 'delete' => 'delete'];
 
@@ -46,29 +48,30 @@ class ListArticles extends Component
     protected $rules = [
         'article.name' => 'required',
         'article.description' => 'required',
+        'article.status' => 'nullable',
         'article.laboratory_id' => 'required'
     ];
     
     public function render()
     {
-        if ($this->readyToLoad){
+        /* if ($this->readyToLoad){ */
             $laboratories = Laboratory::all();
             $articles = Article::where('name', 'like', '%' . $this->search . '%')
                                     ->orWhere('description', 'like', '%' . $this->search . '%')
                                     ->orderBy($this->sort, $this->direction)
                                     ->paginate($this->cant);
-        }else{
+       /*  }else{
             $articles = [];
             $laboratories = [];
-        }
+        } */
 
         return view('livewire.list-articles', compact('articles', 'laboratories'));
     }
 
-    public function loadArticles()
+    /* public function loadArticles()
     {
         $this->readyToLoad = true;
-    }
+    } */
 
     public function order($sort)
     {
@@ -102,6 +105,7 @@ class ListArticles extends Component
         $this->article->save();
 
         $this->reset(['open_edit', 'image']);
+        $this->reset('open_state');
         $this->identificador = rand();
         $this->emit('alert', 'El artículo se actualizó satisfactoriamente');
     }
@@ -110,6 +114,12 @@ class ListArticles extends Component
     {
         $this->article = $article;
         $this->open_image = true;
+    }
+
+    public function state(Article $article)
+    {
+        $this->article = $article;
+        $this->open_state = true;
     }
 
     public function delete(Article $article)
