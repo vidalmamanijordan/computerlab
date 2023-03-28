@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image');
             $table->enum('status', [Article::DESACTIVO, Article::ACTIVO])->default(Article::DESACTIVO);
+            $table->string('owner')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('laboratory_id');
             $table->timestamps();

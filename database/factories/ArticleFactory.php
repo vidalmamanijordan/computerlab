@@ -26,6 +26,7 @@ class ArticleFactory extends Factory
             'description' => $this->faker->paragraph(),
             'image' => 'articles/' . $this->faker->image('public/storage/articles', 640, 480, null, false),
             'status' => $this->faker->randomElement([Article::DESACTIVO, Article::ACTIVO]),
+            'owner' => null,
             'user_id' => User::all()->random()->id,
             'laboratory_id' => Laboratory::all()->random()->id
         ];

@@ -1,9 +1,14 @@
 @php
     $nav_links = [
         [
-            'name' => 'Dashboard',
+            'name' => 'Servicios computacionales',
             'route' => route('dashboard'),
             'active' => request()->routeIs('dashboard')
+        ],
+        [
+            'name' => 'Ayuda',
+            'route' => route('home'),
+            'active' => request()->routeIs('home')
         ]
     ];
 @endphp
@@ -15,8 +20,11 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
+                    {{-- <a href="{{ route('home') }}">
                         <x-jet-application-mark class="block h-9 w-auto" />
+                    </a> --}}
+                    <a href="{{ route('home') }}">
+                        <img src="{{URL::asset('storage/logo/dti.png')}}" class="block h-9 w-auto">
                     </a>
                 </div>
 
@@ -133,8 +141,9 @@
                             </x-slot>
                         </x-jet-dropdown>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                        <a href="{{ route('login') }}" class="mr-2">Ingresar</a>
+                        <a href="{{ route('register') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Crear cuenta</a>
+                        {{-- <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Crear cuenta</a> --}}
                     @endauth
                 </div>
             </div>

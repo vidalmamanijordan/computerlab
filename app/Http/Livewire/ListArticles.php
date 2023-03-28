@@ -49,6 +49,7 @@ class ListArticles extends Component
         'article.name' => 'required',
         'article.description' => 'required',
         'article.status' => 'nullable',
+        'article.owner' => 'nullable',
         'article.laboratory_id' => 'required'
     ];
     

@@ -306,8 +306,12 @@
                         Entregado
                     </h5>
                     <p class="font-normal text-gray-700 dark:text-gray-400">Marque esta <b>opción</b> cuando el objeto ha sido entregado a su propietario.</p>
+                    <hr class="mt-2">
+                    <p class="text-xs text-red-600"><b>OJO: </b>Llenar el campo nombre propietario.</p>
                 </div>
             </div>
+            <x-jet-label value="Nombre propietario" class="mt-4" />
+            <x-jet-input wire:model="article.owner" type="text" class="w-full uppercase" placeholder="Nombre - DNI" />
         </x-slot>
         <x-slot name="footer">
             <x-jet-secondary-button wire:click="$set('open_state', false)" class="mr-2">
