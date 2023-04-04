@@ -3,9 +3,9 @@
         <div class="max-w-4xl mx-auto relative" x-data="{
             activeSlide: 1,
             slides: [
-                { id: 1, title: 'Hello 1', body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum atque cupiditate blanditiis architecto, amet vel odio ab asperiores dolorum assumenda placeat possimus dolor laudantium ex, vitae accusamus incidunt eveniet quibusdam.' },
-                { id: 2, title: 'Hello 2', body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum atque cupiditate blanditiis architecto, amet vel odio ab asperiores dolorum assumenda placeat possimus dolor laudantium ex, vitae accusamus incidunt eveniet quibusdam.' },
-                { id: 3, title: 'Hello 3', body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum atque cupiditate blanditiis architecto, amet vel odio ab asperiores dolorum assumenda placeat possimus dolor laudantium ex, vitae accusamus incidunt eveniet quibusdam.' },
+                { id: 1, title: 'Bienvenidos', body: 'Estamos encantados de tenerte entre nosotros. ¡En nombre de todos los miembros y de la dirección, nos gustaría extender nuestra más cálida bienvenida y buenos deseos! ¡Bienvenido al equipo! Estamos encantados de tenerle en nuestra oficina.' },
+                { id: 2, title: 'Servicios computacionales', body: 'Un servicio de tecnologías de la información es un conjunto de actividades que buscan responder a las necesidades de un cliente por medio de un cambio de condición en los bienes informáticos (llámese activos), potenciando el valor de estos y reduciendo el riesgo inherente del sistema.' },
+                { id: 3, title: 'Laboratorios de cómputo', body: 'El laboratorio de informática es un instrumento muy completo para el entrenamiento de la comprensión de programas de informática, tales como Excel, Word, Photoshop, Illustrator, AutoCAD, HTML5, etc. Son espacios para estudiar, experimentar y aprender el funcionamiento de programas de informática y practicar su uso.' },
             ],
             loop(){
                 setInterval(() => {this.activeSlide = this.activeSlide === 3 ? 1 : this.activeSlide + 1}, 2000)
